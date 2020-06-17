@@ -1,0 +1,47 @@
+<a routerLink="/addclient" class="btn btn-info">Add Client</a>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>
+            <span>{{ client.id }}</span>
+            <input type="text" value="{{ client.id }}" #id hidden>
+          </td>
+          <td>
+            <input type="text" value="{{ client.name }}" #name [disabled]="!(update == id)">
+          </td>
+          <td>
+            <input type="text" value="{{ client.address }}" #address [disabled]="!(update == id)">
+          </td>
+          <td>
+            <button (click)="update = update == id ? -1 : id; name.value = client.name; address.value = client.address"
+                    class="btn btn-info">
+              {{update == id ? 'Cancel' : 'Update'}}
+            </button>
+          </td>
+          <td>
+            <form (ngSubmit)="onUpdate(id.value, name.value, address.value)" #updatedClientForm="ngForm" >
+              <button type="submit" class="btn btn-info" [disabled]="!(update == id)">Save</button>
+            </form>
+          </td>
+          <td>
+            <form (ngSubmit)="onDelete(client.id)" #clientIdForm="ngForm" >
+              <button type="submit" class="btn btn-info">Delete</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

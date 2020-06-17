@@ -1,0 +1,59 @@
+<a routerLink="/add-medecine" class="btn btn-info">Add Medecine</a>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Composition</th>
+        <th scope="col">Manufacturer</th>
+        <th scope="col">Medicine group</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let medecine of medecines">
+        <td>
+          <span>{{ medecine.id }}</span>
+          <input type="text" value="{{ medecine.id }}" #id hidden>
+        </td>
+        <td>
+          <input type="text" value="{{ medecine.name }}" #name [disabled]="!(update == id)">
+        </td>
+        <td>
+          <input type="text" value="{{ medecine.composition }}" #composition [disabled]="!(update == id)">
+        </td>
+        <td>
+          <span>{{ medecine.manufacturer && medecine.manufacturer.id }} {{ medecine.client && medecine.manufacturer.name }} {{ medecine.manufacturer && medecine.manufacturer.address }}</span>
+        </td>
+        <td>
+          <span>{{ medecine.medecineGroup && medecine.medecineGroup.id }} {{ medecine.medecineGroup && medecine.medecineGroup.name }} </span>
+        </td>
+        <td>
+          <a routerLink="/medicine-details/{{ medecine.id }}" class="btn btn-info">Details</a>
+        </td>
+        <td>
+          <button (click)="update = update == id ? -1 : id; name.value = medecine.name; composition.value = medecine.composition"
+                  class="btn btn-info">
+            {{update == id ? 'Cancel' : 'Update'}}
+          </button>
+        </td>
+        <td>
+          <form (ngSubmit)="onUpdate(id.value, name.value, composition.value, medecine.manufacturer, medecine.medecineGroup)">
+            <button type="submit" class="btn btn-info" [disabled]="!(update == id)">Save</button>
+          </form>
+        </td>
+        <td>
+          <form (ngSubmit)="onDelete(medecine.id)">
+            <button type="submit" class="btn btn-info">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

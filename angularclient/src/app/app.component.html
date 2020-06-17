@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center text-white py-3">{{ title }}</h2>
+          <ul class="text-center list-inline py-3">
+            <li class="list-inline-item">
+              <a routerLink="/clients" class="btn btn-info">Client list</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/manufacturers" class="btn btn-info">Manufacturer list</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/vendors" class="btn btn-info">Vendor list</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/medecine-groups" class="btn btn-info">Medecine group list</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/medecine-list" class="btn btn-info">Medecine list</a>
+            </li>
+          </ul>
+          <ul class="text-center list-inline py-3">
+            <li class="list-inline-item">
+              <a routerLink="/client-orders" class="btn btn-info">Client orders list</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/vendor-orders" class="btn btn-info">Vendor orders list</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

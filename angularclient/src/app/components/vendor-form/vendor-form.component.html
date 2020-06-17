@@ -1,0 +1,19 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #vendorForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="vendor.name" class="form-control" id="name" name="name"
+               placeholder="Enter your name" required #name="ngModel">
+      </div>
+      <div [hidden]="!name || !name.pristine" class="alert alert-danger">Name is required</div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" [(ngModel)]="vendor.address" class="form-control" id="address" name="address"
+               placeholder="Enter your address" required #address="ngModel">
+        <div [hidden]="!address || !address.pristine" class="alert alert-danger">Address is required</div>
+      </div>
+      <button type="submit" [disabled]="!vendorForm.form.valid" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>

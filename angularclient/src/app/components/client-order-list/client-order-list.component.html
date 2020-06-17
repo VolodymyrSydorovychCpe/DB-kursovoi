@@ -1,0 +1,51 @@
+<a routerLink="/add-client-order" class="btn btn-info">Add Client order</a>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Date</th>
+        <th scope="col">Client</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let clientOrder of clientOrders">
+        <td>
+          <span>{{ clientOrder.id }}</span>
+          <input type="text" value="{{ clientOrder.id }}" #id hidden>
+        </td>
+        <td>
+          <input type="text" value="{{ clientOrder.orderDate }}" #orderDate [disabled]="!(update == id)">
+        </td>
+        <td>
+          <span>{{ clientOrder.client && clientOrder.client.id }} {{ clientOrder.client && clientOrder.client.name }} {{ clientOrder.client && clientOrder.client.address }}</span>
+        </td>
+        <td>
+          <a routerLink="/client-order-details/{{ clientOrder.id }}" class="btn btn-info">Details</a>
+        </td>
+        <td>
+          <button (click)="update = update == id ? -1 : id; orderDate.value = clientOrder.orderDate;"
+                  class="btn btn-info">
+            {{update == id ? 'Cancel' : 'Update'}}
+          </button>
+        </td>
+        <td>
+          <form (ngSubmit)="onUpdate(id.value, orderDate.value, clientOrder.client.id, clientOrder.client.name, clientOrder.client.address)" >
+            <button type="submit" class="btn btn-info" [disabled]="!(update == id)">Save</button>
+          </form>
+        </td>
+        <td>
+          <form (ngSubmit)="onDelete(clientOrder.id)">
+            <button type="submit" class="btn btn-info">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

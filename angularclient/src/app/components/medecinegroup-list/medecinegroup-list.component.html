@@ -1,0 +1,43 @@
+<a routerLink="/add-medecine-group" class="btn btn-info">Add Medecine group</a>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let medecineGroup of medecineGroups">
+        <td>
+          <span>{{ medecineGroup.id }}</span>
+          <input type="text" value="{{ medecineGroup.id }}" #id hidden>
+        </td>
+        <td>
+          <input type="text" value="{{ medecineGroup.name }}" #name [disabled]="!(update == id)">
+        </td>
+        <td>
+          <button (click)="update = update == id ? -1 : id; name.value = medecineGroup.name;"
+                  class="btn btn-info">
+            {{update == id ? 'Cancel' : 'Update'}}
+          </button>
+        </td>
+        <td>
+          <form (ngSubmit)="onUpdate(id.value, name.value)">
+            <button type="submit" class="btn btn-info" [disabled]="!(update == id)">Save</button>
+          </form>
+        </td>
+        <td>
+          <form (ngSubmit)="onDelete(medecineGroup.id)">
+            <button type="submit" class="btn btn-info">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

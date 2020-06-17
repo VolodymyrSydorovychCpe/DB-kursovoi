@@ -1,0 +1,67 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #medicineForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="medicine.name" class="form-control" id="name" name="name"
+               placeholder="Enter medecine name" required #name="ngModel">
+      </div>
+      <div *ngIf="!medicine.name" [hidden]="!name || !name.pristine" class="alert alert-danger">Name is required</div>
+      <div class="form-group">
+        <label for="composition">Composition</label>
+        <input type="text" [(ngModel)]="medicine.composition" class="form-control" id="composition" name="composition"
+               placeholder="Enter medicine composition" required #composition="ngModel">
+        <div *ngIf="!medicine.composition" [hidden]="!composition || !composition.pristine" class="alert alert-danger">Composition is required</div>
+      </div>
+      <div class="form-group" *ngIf="!medicine.id || !!medicine.manufacturer">
+        <label for="manufacturer">Manufacturer:</label>
+        <span *ngIf="!!medicine.manufacturer">{{ medicine.manufacturer.id }} {{ medicine.manufacturer.name }} {{ medicine.manufacturer.address }}</span>
+        <div>
+          <select [(ngModel)]="medicine.manufacturer" name="manufacturer" id="manufacturer">
+            <option *ngFor="let manufacturer of manufacturers" [ngValue]="manufacturer" [selected]="manufacturer.id == 99">
+              {{ manufacturer.id }} {{ manufacturer.name }} {{ manufacturer.address }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="medicineGroup">Medicine group:</label>
+        <span *ngIf="!!medicine.medecineGroup">{{ medicine.medecineGroup.id }} {{ medicine.medecineGroup.name }}</span>
+        <div>
+          <select [(ngModel)]="medicine.medecineGroup" name="medicineGroup" id="medicineGroup">
+            <option *ngFor="let medicineGroup of medicineGroups" [ngValue]="medicineGroup">
+              {{ medicineGroup.id }} {{ medicineGroup.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="selectedVendor">Vendor:</label>
+        <div *ngIf="!!selectedVendorList">
+          <div *ngFor="let selectedVendor of selectedVendorList">
+            <span>{{ selectedVendor.id }} {{ selectedVendor.name }} {{ selectedVendor.address }}</span>
+            <button (click)="onDelete(selectedVendor.id)" class="btn btn-info">
+              Delete
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!selectedVendorList">
+          <div *ngFor="let selectedVendor of medicine.vendors">
+            <span>{{ selectedVendor.id }} {{ selectedVendor.name }} {{ selectedVendor.address }}</span>
+            <button (click)="onDelete(selectedVendor.id)" class="btn btn-info">
+              Delete
+            </button>
+          </div>
+        </div>
+        <div>
+          <select [(ngModel)]="selectedVendor" (change)="onSelect(sValue.value)" name="selectedVendor" id="selectedVendor" #sValue>
+            <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+              {{ vendor.id }} {{ vendor.name }} {{ vendor.address }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" [disabled]="!medicineForm.form.valid" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>

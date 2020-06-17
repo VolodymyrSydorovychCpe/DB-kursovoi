@@ -1,0 +1,51 @@
+<a routerLink="/add-vendor-order" class="btn btn-info">Add Vendor order</a>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Date</th>
+        <th scope="col">Vendor</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let vendorOrder of vendorOrders">
+        <td>
+          <span>{{ vendorOrder.id }}</span>
+          <input type="text" value="{{ vendorOrder.id }}" #id hidden>
+        </td>
+        <td>
+          <input type="text" value="{{ vendorOrder.orderDate }}" #orderDate [disabled]="!(update == id)">
+        </td>
+        <td>
+          <span>{{ vendorOrder.vendor && vendorOrder.vendor.id }} {{ vendorOrder.vendor && vendorOrder.vendor.name }} {{ vendorOrder.vendor && vendorOrder.vendor.address }}</span>
+        </td>
+        <td>
+          <a routerLink="/vendor-order-details/{{ vendorOrder.id }}" class="btn btn-info">Details</a>
+        </td>
+        <td>
+          <button (click)="update = update == id ? -1 : id; orderDate.value = vendorOrder.orderDate;"
+                  class="btn btn-info">
+            {{update == id ? 'Cancel' : 'Update'}}
+          </button>
+        </td>
+        <td>
+          <form (ngSubmit)="onUpdate(id.value, orderDate.value)" >
+            <button type="submit" class="btn btn-info" [disabled]="!(update == id)">Save</button>
+          </form>
+        </td>
+        <td>
+          <form (ngSubmit)="onDelete(vendorOrder.id)">
+            <button type="submit" class="btn btn-info">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

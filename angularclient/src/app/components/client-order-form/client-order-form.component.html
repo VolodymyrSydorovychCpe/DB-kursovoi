@@ -1,0 +1,65 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #clientOrderForm="ngForm">
+      <div class="form-group">
+        <label for="orderDate">Date</label>
+        <input type="text" [(ngModel)]="clientOrder.orderDate" class="form-control" id="orderDate" name="orderDate"
+               placeholder="Enter order date" required #orderDate="ngModel">
+        <div [hidden]="!orderDate || !orderDate.pristine" class="alert alert-danger">Date is required</div>
+      </div>
+      <div class="form-group">
+        <label for="client">Client</label>
+        <span *ngIf="!!clientOrder.client">{{ clientOrder.client.id }} {{ clientOrder.client.name }} {{ clientOrder.client.address }}</span>
+        <div>
+          <select [(ngModel)]="clientOrder.client" name="client" id="client">
+            <option *ngFor="let client of clients" [ngValue]="client">
+              {{ client.id }} {{ client.name }} {{ client.address }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <form #selectMedicineForm="ngForm">
+        <label for="selectedMedicine">Medicines:</label>
+        <div *ngIf="!!selectedMedicineList">
+          <div *ngFor="let selectedMedicine of selectedMedicineList">
+            <span>
+              {{ selectedMedicine.medicine.id }} {{ selectedMedicine.medicine.name }}
+              {{ selectedMedicine.medicine.composition }} - {{ selectedMedicine.count }}
+            </span>
+            <button (click)="onDelete(selectedMedicine.medicine.id)" class="btn btn-info">
+              Delete
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!selectedMedicineList && !!clientOrder.clientOrderItems">
+          <div *ngFor="let selectedMedicine of clientOrder.clientOrderItems | keyvalue">
+            <span>
+              {{ selectedMedicine.key.id }} {{ selectedMedicine.key.name }}
+              {{ selectedMedicine.key.composition }} - {{ selectedMedicine.value }}
+            </span>
+            <button (click)="onDelete(selectedMedicine.key.id)" class="btn btn-info">
+              Delete
+            </button>
+          </div>
+        </div>
+        <select name="selectedMedicine" id="selectedMedicine" #sMedicine>
+          <option *ngFor="let medicine of medicines" value="{{ medicine.id }}">
+            {{ medicine.id }} {{ medicine.name }} {{ medicine.address }}
+          </option>
+        </select>
+        <div>
+          <label for="medicineCount">Medicine count</label>
+          <input type="text" class="form-control" id="medicineCount" name="medicineCount"
+                 placeholder="Enter medicine count" required #sMedicineCount>
+          <div [hidden]="!medicineCount || !medicineCount.pristine" class="alert alert-danger">Medicine count is required</div>
+        </div>
+        <div>
+          <button (click)="onAddMedicine(sMedicine.value, sMedicineCount.value)" class="btn btn-info">
+            Add/Update medicine
+          </button>
+        </div>
+      </form>
+      <button type="submit" [disabled]="!clientOrderForm.form.valid" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>
